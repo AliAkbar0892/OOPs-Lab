@@ -1,9 +1,9 @@
+
 /*  Name:  Ali Akbar 
     Section: 2C
     Roll No. : 24k-0892 
     HomeWork TASK
 */    
-
 
 #include "iostream"
 using namespace std;
@@ -11,7 +11,7 @@ using namespace std;
 float cityAqi[4][7] = {
     {234,342,45,454,343,23,43},
     {34,234,234,32,34,234,543},
-    {32,43,23,43,345,43,23},               //sample data for easy checking. 
+    {32,43,23,43,345,43,23},
     {342,234,43,23,34,234,452}
 };
 
@@ -28,6 +28,8 @@ int AQIinput(){
     return 0;
 } 
 
+float weeklyAVG[4];
+
 int averageAQI(){
     float avg[4];
 
@@ -39,6 +41,7 @@ int averageAQI(){
             sum = sum + cityAqi[i][j];
         }
         avg[i] = sum / 7;
+        weeklyAVG[i] = avg[i];
     }
     for (int i = 0; i < 4; i++)
     {
@@ -56,8 +59,12 @@ int averageAQI(){
     }
     cout << "City" << maxAQI[1] << " has the worst AQI of " << maxAQI[0] << endl;
 }
+
+int criticalDs[4][7];
+
 int criticalDays(){
-    int Cdays;
+    int c = 0; 
+    int d = 0;
     cout << "Critical Days: " << endl;
     for (int i = 0; i < 4; i++)
     {
@@ -66,6 +73,11 @@ int criticalDays(){
             if (cityAqi[i][j]>150)
             {
                 cout << "       => City"<< i+1 << " Day"<< j+1 << "     Ciritcal AQI: "<<cityAqi[i][j]<< endl;
+                for (; c < 7 && d < 7; c++ , d++ )
+                {
+                    criticalDs[c][d] = cityAqi[i][j];
+                }
+                
             }
             
         }
@@ -92,7 +104,7 @@ void visualRep() {
 
 int monthlyAQI[4][28] = {
     {234, 342, 45, 454, 343, 23, 43, 150, 267, 189, 420, 378, 332, 415, 125, 278, 90, 50, 210, 390, 410, 399, 275, 321, 198, 305, 280, 350},  
-    {34, 234, 234, 32, 34, 234, 543, 200, 145, 377, 321, 267, 289, 344, 212, 278, 365, 123, 98, 210, 315, 450, 398, 410, 275, 250, 220, 400},   //sample data
+    {34, 234, 234, 32, 34, 234, 543, 200, 145, 377, 321, 267, 289, 344, 212, 278, 365, 123, 98, 210, 315, 450, 398, 410, 275, 250, 220, 400},  
     {32, 43, 23, 43, 345, 43, 23, 110, 176, 298, 420, 389, 410, 325, 289, 310, 278, 225, 199, 267, 312, 408, 390, 410, 320, 335, 290, 410},  
     {342, 234, 43, 23, 34, 234, 452, 270, 245, 289, 365, 321, 289, 345, 412, 298, 356, 178, 123, 367, 320, 410, 405, 380, 255, 260, 300, 370}  
 };
@@ -170,9 +182,10 @@ int changeAQI(){
 
 int main()
 {
-    cout << "       || Welcome to AQI Tracker ||" << endl;
-    cout << " *- For Weekly AQI Data, Press 1: " << endl;
-    cout << " *- For monthly AQI Data, Press 2: "<< endl;
+    cout << " Welcome to AQI Tracker " << endl;
+    cout << " For Weekly AQI Data, Press 1: " << endl;
+    cout << " For monthly AQI Data, Press 2: "<< endl;
+    cout << " For Summery Report, Press 3: "<< endl;
     cout << " Enter Choice : ";
     int choice1;
     cin >> choice1;
@@ -202,7 +215,7 @@ int main()
                 break;    
         }
     }
-    else if(choice1 == 2){        // Task 4
+    else if(choice1 == 2){
         cout << "If you want to Input monthly AQI of Cities, Press 0"<< endl << "Otherwise skip, Program can run on sample data."<<endl;
         cout << "For average, Press 1: " << endl;
         cout << "For AQI change, Press 2: "<< endl;
@@ -224,4 +237,42 @@ int main()
             break;
         }   
     }
-}
+    else if(choice1 == 3){
+        cout << "Weekly average for each city: " <<endl;
+        for (int i = 0; i < 4; i++)
+        {
+            cout << " City" << i+1 << " : " << weeklyAVG[i] << ".    ";
+        }
+        cout << "Critical Pollution Days FOr each city: "<< endl;
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                cout << " City" << i+1 << " Day" << j+1 << "  : " << criticalDs[i][j];
+            }   
+        }
+        cout << "Highest and Lowest AQI values recoreded during month: ";
+        int highest[1], lowest[1];
+        for (int i = 0; i < 4; i++) {
+            highest[0] = monthlyAQI[i][0];  
+            lowest[0] = monthlyAQI[i][0];  
+            highest[1] = 0;   
+            lowest[1] = 0; 
+            for (int j = 1; j < 28; j++) {
+                if (monthlyAQI[i][j] > highest[0]) {
+                    highest[0] = monthlyAQI[i][j];
+                    highest[1] = j;
+                }
+                if (monthlyAQI[i][j] < lowest[0]) {
+                    lowest[0] = monthlyAQI[i][j];
+                    lowest[1] = j;
+                }
+            }
+            cout << "City" << i + 1 << ": " << endl;
+            cout << "Highest AQI: " << highest[0] << " On Day" << highest[1] + 1 << endl;
+            cout << "Lowest AQI: " << lowest[0] << " On day " << lowest[1] + 1 << endl;
+        }
+    }
+}            
+    
+
