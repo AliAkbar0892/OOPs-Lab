@@ -1,3 +1,9 @@
+/*  Name:  Ali Akbar 
+    Section: 2C
+    Roll No. : 24k-0892 
+    ClassWork TASK
+*/    
+
 #include <iostream>
 #include <string>
 using namespace std;
