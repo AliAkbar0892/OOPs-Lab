@@ -1,3 +1,4 @@
+
 /*
     Name        Ali Akbar 
     Section     2C
@@ -30,3 +31,4 @@ int main() {
     delete[] strings;
     return 0;
 }
+
