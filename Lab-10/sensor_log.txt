@@ -1,0 +1,5 @@
+
+Sensor 1: 25.5 C
+Sensor 2: 98.1 %RH
+
+
